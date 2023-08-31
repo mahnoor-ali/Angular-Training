@@ -1,0 +1,52 @@
+<h2>{{title}}</h2>
+
+<!--
+     Pristine: no one has touched this form''s any field ever (user never interacted wid it)
+     Dirty: user has interacted wid it
+     Touched: user has interacted wid it and then left it
+
+valid: {{productsForm.valid | json}}  ,,, 
+invalid: {{productsForm.invalid | json}} ,,,
+pristine: {{productsForm.pristine | json}} ,,,
+dirty: {{productsForm.dirty | json}} ,,,
+{{productsForm.value | json}}
+-->
+
+<div *ngIf="sucessMsg" class="alert alert-success">{{sucessMsg}}</div>
+
+<div class="container">
+  <form #productsForm="ngForm" (ngSubmit)="onSubmit(productsForm)">
+    <div class="form-group">
+      <label for="name">Name:</label>
+      <input #prodName="ngModel" type="text" class="form-control" id="name" [(ngModel)]="product.name" name="Name"
+        required>
+      <div class="alert alert-danger" *ngIf="productsForm.dirty && prodName.errors?.['required']">
+        Name is required
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="description">Description:</label>
+      <input #prodDescription="ngModel" type="text" class="form-control" id="description"
+        [(ngModel)]="product.description" name="Description" required>
+    </div>
+    <div class="form-group">
+      <label for="category">Category:</label>
+      <input type="text" class="form-control" id="category" [(ngModel)]="product.category" name="Category" required>
+    </div>
+    <div class="form-group">
+      <label for="quantity">Quantity:</label>
+      <input #prodQty="ngModel" minlength="2" maxlength="9" type="number" class="form-control" id="quantity"
+        [(ngModel)]="product.quantity" name="Quantity" required>
+    </div>
+    <!--
+        <div class="alert alert-danger" *ngIf="prodQty.errors?.['maxlength']">Quantity should be max 9 characters</div> 
+     -->
+
+    <div class="form-group">
+      <label for="price">Price:</label>
+      <input min="2" #prodPrice="ngModel" type="number" class="form-control" id="price" [(ngModel)]="product.price"
+        name="Price" required>
+    </div>
+    <button [disabled]="productsForm.invalid" class="btn btn-primary"> Submit</button>
+  </form>
+</div>

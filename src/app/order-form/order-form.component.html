@@ -1,0 +1,23 @@
+<form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label>Name:</label>
+      <input type="text" formControlName="name" />
+    </div>
+    <div>
+      <label>Email:</label>
+      <input type="email" formControlName="email" />
+    </div>
+    <div formArrayName="items">
+        <div *ngFor="let itemGroup of items.controls; let i = index" [formGroupName]="i">
+          <h3>Item {{ i + 1 }}</h3>
+          <label>Product:</label>
+          <input type="text" formControlName="product" />
+          <label>Quantity:</label>
+          <input type="number" formControlName="quantity" />
+          <button (click)="removeItem(i)">Remove</button>
+        </div>
+        <button (click)="addItem()">Add Item</button>
+      </div>      
+    <button type="submit">Place Order</button>
+  </form>
+  
